@@ -1,0 +1,100 @@
+% Kevin Seveur
+% CSc 4630 Program #3
+% Account: kseveur1 / 002206515
+% Due date: October 25th
+% This is a test program for program#3
+
+
+function program3Test()
+
+% Test 1
+fprintf("\n*************Test 1****************\n");
+fprintf("\nMatrix searched: ");
+sub = 1;
+[count, rout, cout] = program3(0,sub);
+eCount = 2;
+eRout = [1;3];
+eCout = [1;1];
+disp("Submatrices searched: ");
+disp(sub)
+
+
+
+if (count == eCount && isequal(rout,eRout) && isequal(cout,eCout))
+    disp('Test 1 Pass');
+else
+    disp('Test 1 Fail');
+end
+
+% Test 2
+fprintf("\n*************Test 2****************\n");
+fprintf("\nMatrix searched: ");
+sub = [9, 0; 4, 5];
+[count, rout, cout] = program3(0,sub);
+eCount = 1;
+eRout = 2;
+eCout = 4;
+disp("Submatrices searched: ");
+disp(sub)
+
+if (count == eCount && isequal(rout,eRout) && isequal(cout,eCout))
+    disp('Test 2 Pass');
+else
+    disp('Test 2 Fail');
+end
+
+% Test 3
+fprintf("\n*************Test 3****************\n");
+fprintf("\nMatrix searched: ");
+sub = [4,5;9,0;4,5;9,0];
+[count, rout, cout] = program3(0,sub);
+eCount = 1;
+eRout = 1;
+eCout = 4;
+disp("Submatrices searched: ");
+disp(sub)
+
+if (count == eCount && isequal(rout,eRout) && isequal(cout,eCout))
+    disp('Test 3 Pass');
+else
+    disp('Test 3 Fail');
+end
+
+% Test 4
+fprintf("\n*************Test 4****************\n");
+fprintf("\nMatrix searched: ");
+sub = 0;
+[count, rout, cout] = program3(0,0);
+eCount = 2;
+eRout = [2;4];
+eCout = [5;5];
+disp("Submatrices searched: ");
+disp(sub)
+
+if (count == eCount && isequal(rout,eRout) && isequal(cout,eCout))
+    disp('Test 4 Pass');
+else
+    disp('Test 4 Fail');
+end
+
+% Test 5
+fprintf("\n*************Test 5****************\n");
+fprintf("Matrix searched: ");
+sub = [7,8,9;2,3,4];
+[count, rout, cout] = program3(0,sub);
+eCount = 1;
+eRout = 2;
+eCout = 2;
+disp("Submatrices searched: ");
+disp(sub)
+
+
+if (count == eCount && isequal(rout,eRout) && isequal(cout,eCout))
+    disp('Test 5 Pass');
+else
+    disp('Test 5 Fail');
+end
+
+
+
+end
