@@ -1,0 +1,118 @@
+% Kevin Seveur
+% CSc 4630 Program #3
+% Account: kseveur1 / 002206515
+% Due date: October 25th
+%
+% Info:
+% 1) This program takes in a "matrixSize" of how large you want the matrix
+% to be and "testParam" for testing purposes which allows you to specify
+% the submatrix to search on.
+%
+% For Normal Operation - A square randomized matrix based on the digit
+% entered in "matrixSize" is created and the user should put a 0 in
+% for "testParam".
+% Example: If the user enters "program3(3,0), a 3X3 randomized matrix is
+% created.
+%
+% 2) Next the user is asked to enter the submatrix they would
+% like to search for whithin the original matrix. The submatrix must be in
+% the form "[ x1 x2 xn; x3 x4 xn]" for any size dimensions requested.
+%
+% 3) Finally the output to the screen is the number of submtrices as well
+% as the starting location of each submatrix.
+
+
+
+function [count, rout, cout] = program3(matrixSize, testParam)
+
+
+if matrixSize > 0
+    A = magic(matrixSize)
+else
+    A = [1 2 3 4 5 ;6 7 8 9 0 ;1 2 3 4 5;6 7 8 9 0]
+end
+
+
+
+%% Prompt user to input submatrix to search
+
+if matrixSize > 0
+    fprintf("Please enter your submatrix to search.\n");
+    B = input('You must use Matlab format for matrix definition: ');
+else
+    B = testParam;
+end
+
+
+origMatSize = size(A);
+
+searchMatSize = size(B);
+
+
+% Check to make sure that the submatrix is actually smaller than the matrix.
+if(searchMatSize(1) <= origMatSize(1) && searchMatSize(2) <= origMatSize(2))
+    
+    %Limits the scope of the search to be inside of A
+    sizeNew = origMatSize - searchMatSize + 1;
+    
+    %Creates a copy of A with all zero values
+    tf = false(origMatSize);
+    
+    
+    
+    %% Loop through the original matrix to find submatrix
+    
+    for r = 1:sizeNew(1)
+        
+        for c = 1:sizeNew(2)
+            
+            % Marks a true in the tf matrix in all the locations where B is
+            
+            % found
+            
+            tf(r,c) = isequal(A(r:r+searchMatSize(1)-1,c:c+searchMatSize(2)-1),B);
+            
+        end
+        
+    end
+    
+    
+    
+    %% Print solutions
+    
+    [rout,cout] = find(tf);
+    
+    count = length(rout);
+    
+    if(count > 0)
+       % if matrixSize > 0
+            fprintf("\nNumber of submatrixes: " + count);
+            
+            for idx = 1:count
+                
+                fprintf("\nSubmatrix #" + idx + " = " + "["+rout(idx) ...
+                    +"," + cout(idx) + "]");
+                
+            end
+        %end
+        
+    else
+        
+        disp("Your submatrix was not found!");
+        
+    end
+    
+    fprintf("\n");
+    
+    
+    
+    %% Gracefully exit if submatrix parameters are larger than original matrix
+    
+else
+    
+    disp("Your submatrix is larger than the original matrix. Please try again!");
+    
+end
+
+end
+
