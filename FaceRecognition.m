@@ -1,3 +1,6 @@
+%% Load Image info from Face Database Directory
+faceDatabase = imageSet('FaceDatabaseFolder', 'recursive');
+
 
 
 %% Feature Extraction Section
@@ -6,7 +9,7 @@
 
 
 
-%% Extract HOG Features for a Single Face for Presentation and Explanation
+%% Extract Histogram of Oriented Gradient (HOG) Features for a Single Face for Presentation and Explanation
 person = 2;
 [hogFeature, visualization] = extractHOGFeatures(read(training(person), 1));
 figure;
@@ -20,10 +23,10 @@ title('HOG Features');
 
 %% Extract HOG Features for Training Set
 % 4680 is used as the output from the HOG is 1 X 4680
-trainingFeatures = zeros(size(training,1) * training(1).Count,4680);
+trainingFeatures = zeros(size(training,1) * training(1).Count,6826716);%4680);
 featureCount = 1;
 for i = 1:size(training,2)
-    for j = 1:training(i).count
+    for j = 1:training(i).Count
         trainingFeatures(featureCount, :) = extractHOGFeatures(read(training(i), 1));
         trainingLabel{featureCount} = training(i).Description;
         featureCount = featureCount+1;
@@ -74,6 +77,3 @@ for person = 1:5
         title('Matched Class');
     end
 end
-
-
-
