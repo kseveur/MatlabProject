@@ -1,0 +1,38 @@
+function builddatabase( )
+clc
+% Generates a database of features based on the images in the db/ folder.
+d = dir('database/*.jpg');
+trainingLabel = [];
+trainingFeatures = [];
+featureCount = [];
+personIndex = [];
+faceClassifier = [];
+h = waitbar(0,'Plz wait Training is underprocess...!!','name','SCANNING IS IN PROGRESS');
+
+%% Extract HOG Features for Training Set
+% 4680 is used as the output from the HOG is 1 X 4680
+trainingFeatures = zeros(size(training,1) * training(1).Count,4680);% 6826716);
+featureCount = 1;
+for i = 1:size(training,2)
+    for j = 1:training(i).Count
+        trainingFeatures(featureCount, :) = extractHOGFeatures(read(training(i), 1));
+        trainingLabel{featureCount} = training(i).Description;
+        featureCount = featureCount+1;
+    end
+    personIndex{i} = training(i).Description;
+end
+
+%% Create classifier
+faceClassifier = fitcecoc(trainingFeatures, trainingLabel);
+
+% for k = 1:size(d, 1)
+%     waitbar(k/size(d,1),h,['Training '  d(k).name ' of ' num2str(length(d)) ' images.']);
+%     names = strvcat(names, d(k).name);
+%     img = imread(['database/' d(k).name]);
+%     [hist128, edge] = calcfeatures(img); %subroutine called for feature extraction
+%     csd128hist = [csd128hist; hist128];
+%     edges = [edges; edge];
+% end
+save features trainingLabel trainingFeatures featureCount personIndex faceClassifier
+close(h)
+end
